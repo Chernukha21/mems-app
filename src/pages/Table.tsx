@@ -53,7 +53,7 @@ export default function TablePage() {
             case "image":
                 return (
                     <div>
-                        <p className="text-bold text-sm capitalize text-wrap">{cellValue}</p>
+                        <p className="text-bold text-sm capitalize break-all">{cellValue}</p>
                     </div>
                 );
             case "likes":
@@ -65,7 +65,7 @@ export default function TablePage() {
                 );
             case "actions":
                 return (
-                    <div className="relative flex items-center gap-2">
+                    <div className="relative flex justify-center items-center gap-2">
                         <Tooltip content="Edit meme">
                               <span
                                   className="text-lg text-default-400 cursor-pointer active:opacity-50"

@@ -1,0 +1,53 @@
+
+body {
+    background-color: #000;
+}
+
+.heroui-table thead {
+    @apply bg-gray-100;
+}
+.heroui-table th {
+    @apply px-4 py-2 text-left font-semibold;
+}
+
+[data-key="image"] {
+    width: 100px;
+}
+
+@media (max-width: 480px) {
+    [data-key="image"] {
+        width: 140px;
+    }
+    #card {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    [data-key="image"] {
+        width: 140px;
+    }
+    #card {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 768px) {
+    [data-key="image"] {
+        width: 180px;
+    }
+    #card {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+@media (min-width: 1024px) {
+    [data-key="image"] {
+        width: 180px;
+    }
+    #card {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+[data-key="image"] p {
+    word-break: break-all;
+}

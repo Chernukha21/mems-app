@@ -1,26 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.heroui-table thead {
-    @apply bg-gray-100;
-}
-.heroui-table th {
-    @apply px-4 py-2 text-left font-semibold;
-}
-
-[data-key="image"] {
-    width: 100px;
-}
-
-@media (min-width: 640px) {
-    [data-key="image"] {
-        width: 140px;
-    }
-}
-
-@media (min-width: 768px) {
-    [data-key="image"] {
-        width: 180px;
-    }
-}

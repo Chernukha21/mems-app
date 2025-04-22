@@ -1,6 +1,7 @@
 import './App.css'
 import {Navbar, NavbarContent, NavbarItem} from "@heroui/react";
-import {NavLink, Outlet} from "react-router-dom";
+import {Outlet} from "react-router-dom";
+import NavLink from "./components/NavLink.tsx";
 
 function App() {
     return (
@@ -8,18 +9,10 @@ function App() {
             <Navbar className="w-full z-50">
                 <NavbarContent className="gap-4" justify="center">
                     <NavbarItem>
-                        <NavLink
-                            to="/list"
-                            className={({ isActive }) => isActive ? "text-blue-900" : ""}
-                        >
-                            List
-                        </NavLink>
+                        <NavLink to="/list" label="List" />
                     </NavbarItem>
                     <NavbarItem>
-                        <NavLink
-                            to="/table"
-                            className={({ isActive }) => isActive ? "text-blue-900" : ""}
-                        >
+                        <NavLink to="/table">
                             Table
                         </NavLink>
                     </NavbarItem>

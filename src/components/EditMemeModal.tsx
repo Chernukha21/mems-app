@@ -7,8 +7,8 @@ import {
     Button,
     Input
 } from "@heroui/react";
-import {Meme} from "../utils/types";
-import {useState} from "react";
+import { Meme } from "../utils/types";
+import { useEffect, useState } from "react";
 
 type Props = {
     isOpen: boolean;
@@ -17,16 +17,49 @@ type Props = {
     onSave: (updated: Meme) => void;
 };
 
-export const EditMemeModal = ({isOpen, onOpenChange, meme, onSave}: Props) => {
+export const EditMemeModal = ({ isOpen, onOpenChange, meme, onSave }: Props) => {
     const [editedMeme, setEditedMeme] = useState<Meme>(meme);
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+    useEffect(() => {
+        setEditedMeme(meme);
+        setErrors({});
+    }, [meme]);
 
     const handleChange = (field: keyof Meme, value: string | number) => {
-        setEditedMeme({...editedMeme, [field]: value});
+        setEditedMeme({ ...editedMeme, [field]: value });
+    };
+
+    const validate = () => {
+        const newErrors: { [key: string]: string } = {};
+
+        if (!editedMeme.name || editedMeme.name.length < 3 || editedMeme.name.length > 100) {
+            newErrors.name = "Name must be between 3 and 100 characters.";
+        }
+
+        const urlRegex = /^https?:\/\/.*\.(jpg|jpeg|png)$/i;
+        if (!editedMeme.image && !urlRegex.test(editedMeme.image)) {
+            newErrors.image = "Enter a valid JPG URL (e.g., https://...jpeg).";
+        }
+
+        if (
+            typeof editedMeme.likes !== "number" ||
+            isNaN(editedMeme.likes) ||
+            editedMeme.likes < 0 ||
+            editedMeme.likes > 99
+        ) {
+            newErrors.likes = "Likes must be a number from 0 to 99.";
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
     };
 
     const handleSave = () => {
-        onSave(editedMeme);
-        onOpenChange();
+        if (validate()) {
+            onSave(editedMeme);
+            onOpenChange();
+        }
     };
 
     return (
@@ -40,17 +73,23 @@ export const EditMemeModal = ({isOpen, onOpenChange, meme, onSave}: Props) => {
                                 label="Title"
                                 value={editedMeme.name}
                                 onChange={(e) => handleChange("name", e.target.value)}
+                                isInvalid={!!errors.name}
+                                errorMessage={errors.name}
                             />
                             <Input
                                 label="Image URL"
                                 value={editedMeme.image}
                                 onChange={(e) => handleChange("image", e.target.value)}
+                                isInvalid={!!errors.image}
+                                errorMessage={errors.image}
                             />
                             <Input
                                 label="Likes"
                                 type="number"
                                 value={editedMeme.likes.toString()}
                                 onChange={(e) => handleChange("likes", Number(e.target.value))}
+                                isInvalid={!!errors.likes}
+                                errorMessage={errors.likes}
                             />
                         </ModalBody>
                         <ModalFooter>
